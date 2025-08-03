@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. P. Mathan Kumar | Researcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #0d9488;
+            --color-primary-dark: #0f766e;
+            --color-secondary: #0891b2;
+            --color-accent: #06b6d4;
+            --color-text-light: #f9fafb;
+            --color-text-dark: #1f2937;
+            --color-bg-light: #f9fafb;
+            --color-card-bg-light: #ffffff;
+            --color-border-light: #e5e7eb;
+            --color-sidebar-bg-light: #f3f4f6;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--color-bg-light);
+            color: var(--color-text-dark);
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .primary-gradient {
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+        }
+        .secondary-gradient {
+            background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
+        }
+        .accent-gradient {
+            background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+        }
+        .glass-card {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 56px;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            z-index: 1;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 2px;
+        }
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .floating-action {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 40;
+        }
+        .main-content {
+            margin-left: 0;
+            padding-top: 0;
+            min-height: 100vh;
+        }
+        .enhanced-section {
+            padding: 4rem 0;
+            background-color: var(--color-bg-light);
+        }
+        .enhanced-section:nth-child(even) {
+            background-color: rgba(249, 250, 251, 0.6);
+        }
+        .enhanced-section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .enhanced-section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        .enhanced-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 2px;
+        }
+        .enhanced-section-subtitle {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-primary);
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery-item {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            position: relative;
+            height: 250px;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+            display: flex;
+            align-items: end;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-description {
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        .post-card {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            background: var(--color-card-bg-light);
+            cursor: pointer;
+        }
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .post-image-container {
+            height: 200px;
+            overflow: hidden;
+        }
+        .post-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .post-card:hover .post-image {
+            transform: scale(1.05);
+        }
+        .post-content {
+            padding: 1.5rem;
+        }
+        .post-date {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 0.75rem;
+        }
+        .post-excerpt {
+            font-size: 0.875rem;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+        .publication-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .publication-card {
+            background: var(--color-card-bg-light);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-border-light);
+        }
+        .publication-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .publication-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .publication-journal {
+            display: inline-block;
+            background-color: #ecfdf5;
+            color: #047857;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            margin-bottom: 0.5rem;
+        }
+        .publication-year {
+            background-color: #f3f4f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        .publication-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 0.5rem;
+        }
+        .publication-description {
+            font-size: 0.875rem;
+            color: #4b5563;
+            line-height: 1.5;
+            white-space: pre-line; /* Preserve line breaks and formatting */
+        }
+        .publication-authors {
+            font-size: 0.75rem;
+            color: #6b7280;
+            white-space: pre-line; /* Preserve line breaks if entered */
+        }
+        .publication-doi {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        .publication-doi a {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .resource-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--color-card-bg-light);
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            transition: all 0.2s ease;
+            border: 1px solid var(--color-border-light);
+        }
+        .resource-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .collaborator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .collaborator-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--color-card-bg-light);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-border-light);
+        }
+        .collaborator-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .collaborator-image-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(13, 148, 136, 0.2);
+        }
+        .collaborator-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .collaborator-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            margin-bottom: 0.25rem;
+        }
+        .collaborator-designation {
+            font-size: 0.8125rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        .collaborator-description {
+            font-size: 0.8125rem;
+            color: #4b5563;
+            line-height: 1.4;
+            white-space: pre-line; /* Preserve line breaks and formatting */
+        }
+        .collaborator-role {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+        }
+        .role-mentor {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+        }
+        .role-supervisor {
+            background-color: #e9d5ff;
+            color: #7e22ce;
+        }
+        .role-colleague {
+            background-color: #fef9c3;
+            color: #854d0e;
+        }
+        .role-collaborator {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 0;
+            border: none;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+        }
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text-dark);
+        }
+        .close {
+            color: #aaa;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: calc(90vh - 80px);
+        }
+        .modal-image {
+            width: 100%;
+            height: auto;
+            max-height: 60vh;
+            object-fit: contain;
+        }
+        .tab-button {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .tab-button:hover {
+            background-color: #f3f4f6;
+        }
+        .tab-button.active {
+            border-bottom: 2px solid var(--color-primary);
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+        .nav-link-top {
+            position: relative;
+            transition: all 0.3s ease;
+            color: #4b5563;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+        .nav-link-top:hover {
+            color: var(--color-primary);
+            background-color: #f0fdfa;
+        }
+        .nav-link-top.active {
+            color: var(--color-primary);
+            background-color: #ecfdf5;
+        }
+        .nav-link-top::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            transition: width 0.3s ease, left 0.3s ease, transform 0.3s ease;
+            border-radius: 1px;
+        }
+        .nav-link-top:hover::after,
+        .nav-link-top.active::after {
+            width: 80%;
+        }
+        /* --- Social Links --- */
+        .social-links-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .social-link-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .social-link-icon:hover {
+            background-color: white;
+            color: var(--color-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .contact-social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .contact-social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f0fdfa;
+            color: var(--color-primary);
+            transition: all 0.3s ease;
+            border: 1px solid #ccfbf1;
+        }
+        .contact-social-link:hover {
+            background-color: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* --- Adjust Research Focus Areas Title Color --- */
+        #homeResearchAreasTitle {
+            color: white;
+        }
+        /* --- Hero Section Enhancements --- */
+        #home {
+            /* Use flexbox for layout */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Ensure background covers */
+            background-size: cover;
+            background-position: center;
+        }
+        #homeContentWrapper {
+             /* Use grid for a potentially more flexible layout */
+             display: grid;
+             grid-template-columns: 1fr 1fr; /* Two columns */
+             gap: 2rem; /* Space between columns */
+             align-items: center;
+             max-width: 1200px; /* Constrain width */
+             width: 100%;
+             padding: 2rem;
+             z-index: 10;
+             position: relative;
+        }
+        #homeProfileSection {
+             text-align: center; /* Center content in the profile column */
+        }
+        #homeProfileImage {
+             width: 180px; /* Increase profile image size */
+             height: 180px;
+             border-width: 4px; /* Slightly thicker border */
+             margin-bottom: 1rem; /* Space below image */
+        }
+        #homeProfileBadge {
+             bottom: -0.5rem; /* Adjust badge position */
+             right: -0.5rem;
+        }
+        #homeProfileName {
+             font-size: 2.5rem; /* Larger name */
+             margin-bottom: 0.5rem;
+        }
+        #homeProfileDescription {
+             font-size: 1.1rem; /* Larger description */
+             margin-bottom: 1.5rem;
+        }
+        #homeMetricsAndActions {
+             display: flex;
+             flex-direction: column;
+             align-items: flex-start; /* Align items to the left */
+             gap: 2rem; /* Space between metrics and actions */
+        }
+        #homeMetricsGrid {
+             grid-template-columns: repeat(5, 1fr); /* 5 columns for metrics */
+             gap: 1rem; /* Space between metrics */
+             width: 100%;
+        }
+        .metric-card {
+             padding: 1rem; /* More padding */
+        }
+        .metric-card i {
+             margin-bottom: 0.5rem; /* Space below icon */
+        }
+        #homeResearchAreasSection {
+             width: 100%; /* Full width within its grid cell */
+             text-align: left; /* Align text to the left */
+        }
+        #homeResearchAreasTitle {
+             text-align: left; /* Align title to the left */
+             margin-bottom: 1rem; /* Space below title */
+        }
+        #homeResearchAreasList {
+             justify-content: flex-start; /* Align badges to the left */
+             flex-wrap: wrap; /* Allow wrapping */
+        }
+        #homeActionButtons {
+             display: flex;
+             gap: 1rem; /* Space between buttons */
+        }
+        #homeScrollIndicator {
+             z-index: 5; /* Ensure it's above content but below potential modals */
+        }
+        /* --- Responsive Adjustments for Hero --- */
+        @media (max-width: 1024px) {
+            #homeContentWrapper {
+                 grid-template-columns: 1fr; /* Stack columns on medium screens */
+                 text-align: center; /* Center content again */
+            }
+            #homeMetricsAndActions {
+                 align-items: center; /* Center items on medium */
+            }
+            #homeResearchAreasSection {
+                 text-align: center; /* Center research areas */
+            }
+            #homeResearchAreasTitle {
+                 text-align: center; /* Center title */
+            }
+            #homeResearchAreasList {
+                 justify-content: center; /* Center badges */
+            }
+        }
+        @media (max-width: 768px) {
+            #homeContentWrapper {
+                 padding: 1rem; /* Reduce padding */
+            }
+            #homeProfileImage {
+                 width: 140px; /* Smaller image on mobile */
+                 height: 140px;
+            }
+            #homeProfileName {
+                 font-size: 2rem; /* Smaller name */
+            }
+            #homeProfileDescription {
+                 font-size: 1rem; /* Smaller description */
+            }
+            #homeMetricsGrid {
+                 grid-template-columns: repeat(3, 1fr); /* 3 columns on small screens */
+            }
+            #homeActionButtons {
+                 flex-direction: column; /* Stack buttons */
+                 width: 100%; /* Full width */
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .gallery-grid,
+            .post-grid,
+            .publication-grid,
+            .resource-grid,
+            .collaborator-grid {
+                grid-template-columns: 1fr;
+            }
+            #mobileMenuButton {}
+            #mobileMenu {
+                background-color: var(--color-card-bg-light);
+                padding: 1rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                margin-top: 0.5rem;
+            }
+            .nav-link-top {
+                padding: 0.5rem 1rem;
+                border-radius: 0.25rem;
+                margin-bottom: 0.25rem;
+                display: block;
+                text-align: center;
+            }
+            .nav-link-top::after {
+                display: none;
+            }
+            .nav-link-top.active::after {
+                display: block;
+                width: 50%;
+                left: 0;
+                transform: none;
+                bottom: -2px;
+            }
+            .nav-link-top.active {
+                background-color: #d1fae5;
+            }
+        }
+
+        /* Remove dark mode toggle button styles */
+        .dark-mode-toggle {
+            display: none !important; /* Hide the dark mode toggle completely */
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Top Navigation Bar -->
+    <nav class="w-full bg-white shadow-sm py-3 px-4 z-50 sticky top-0">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between">
+            <a href="#home" class="flex items-center space-x-2">
+                <span class="font-bold text-xl gradient-text">Dr. P. Mathan Kumar</span>
+            </a>
+            <div class="flex items-center space-x-2">
+                 <!-- Dark mode toggle removed -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <div id="mobileMenu" class="hidden md:flex flex-col md:flex-row md:items-center md:space-x-1 md:ml-auto w-full md:w-auto mt-4 md:mt-0">
+                <a href="#home" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Home</a>
+                <a href="#experience" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Experience</a>
+                <a href="#education" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Education</a>
+                <a href="#research" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Research</a>
+                <a href="#gallery" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Gallery</a>
+                <a href="#posts" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Updates</a>
+                <a href="#resources" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Resources</a>
+                <a href="#collaborators" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Collaborators</a>
+                <a href="#contact" class="nav-link-top py-2 px-3 rounded hover:bg-gray-100 md:my-1">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content Area -->
+    <div class="main-content" id="mainContent">
+        <!-- Hero/Home Section with Background Image -->
+        <section id="home" class="relative min-h-screen overflow-hidden pt-12 pb-8">
+            <!-- Background Image -->
+            <div id="homeBackgroundContainer" class="absolute inset-0 bg-gray-200">
+                <img id="homeBackgroundImage" src="" alt="Home Background" class="w-full h-full object-cover opacity-100">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-br from-teal-900/70 to-cyan-900/70"></div>
+            <!-- Enhanced Content Wrapper -->
+            <div id="homeContentWrapper" class="relative z-10">
+                 <!-- Profile Section (Left Column) -->
+                 <div id="homeProfileSection" data-aos="fade-right">
+                    <div class="relative inline-block mb-4">
+                         <img id="homeProfileImage" src="assets/uploads/profile.jpg" alt="Profile" class="rounded-full w-40 h-40 md:w-48 md:h-48 object-cover border-4 border-white/30 shadow-xl mx-auto">
+                         <div id="homeProfileBadge" class="absolute bottom-2 -right-2 bg-white rounded-full p-2 shadow-lg">
+                            <div class="primary-gradient rounded-full p-2">
+                                <i class="fas fa-user-graduate text-white text-lg"></i>
+                            </div>
+                         </div>
+                    </div>
+                    <h1 id="homeProfileName" class="hero-title text-3xl md:text-4xl font-bold text-white mb-2">Loading...</h1>
+                    <p id="homeProfileDescription" class="text-base md:text-lg text-white/90 max-w-md mx-auto">Loading...</p>
+                </div>
+                <!-- Metrics, Actions, Research Areas (Right Column) -->
+                <div id="homeMetricsAndActions" data-aos="fade-left">
+                    <!-- Summary Dashboard Grid -->
+                    <div id="homeMetricsGrid" class="grid grid-cols-3 md:grid-cols-5 gap-3 w-full">
+                        <div class="primary-gradient text-white p-3 rounded-lg shadow-md text-center metric-card">
+                            <div class="bg-white bg-opacity-20 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-1">
+                                <i class="fas fa-book text-sm"></i>
+                            </div>
+                            <h3 class="text-xs font-semibold mb-0.5">Publications</h3>
+                            <p id="homeTotalPublications" class="text-xl font-bold">0</p>
+                        </div>
+                        <div class="accent-gradient text-white p-3 rounded-lg shadow-md text-center metric-card" data-aos-delay="50">
+                            <div class="bg-white bg-opacity-20 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-1">
+                                <i class="fas fa-book-open text-sm"></i>
+                            </div>
+                            <h3 class="text-xs font-semibold mb-0.5">Chapters</h3>
+                            <p id="homeBookChapters" class="text-xl font-bold">0</p>
+                        </div>
+                        <div class="secondary-gradient text-white p-3 rounded-lg shadow-md text-center metric-card" data-aos-delay="100">
+                            <div class="bg-white bg-opacity-20 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-1">
+                                <i class="fas fa-quote-right text-sm"></i>
+                            </div>
+                            <h3 class="text-xs font-semibold mb-0.5">Citations</h3>
+                            <p id="homeTotalCitations" class="text-xl font-bold">0</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-cyan-600 to-teal-600 text-white p-3 rounded-lg shadow-md text-center metric-card" data-aos-delay="150">
+                            <div class="bg-white bg-opacity-20 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-1">
+                                <i class="fas fa-chart-line text-sm"></i>
+                            </div>
+                            <h3 class="text-xs font-semibold mb-0.5">h-index</h3>
+                            <p id="homeHIndex" class="text-xl font-bold">0</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-teal-700 to-cyan-700 text-white p-3 rounded-lg shadow-md text-center metric-card" data-aos-delay="200">
+                            <div class="bg-white bg-opacity-20 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-1">
+                                <i class="fas fa-list-ol text-sm"></i>
+                            </div>
+                            <h3 class="text-xs font-semibold mb-0.5">i10-index</h3>
+                            <p id="homeI10Index" class="text-xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <!-- Research Focus Areas Section -->
+                    <div id="homeResearchAreasSection">
+                        <h3 id="homeResearchAreasTitle" class="text-lg md:text-xl font-semibold mb-2">Research Focus Areas</h3>
+                        <div id="homeResearchAreasList" class="flex flex-wrap gap-1.5">
+                            <span class="text-gray-500 text-xs italic">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div id="homeActionButtons">
+                        <a href="#research" class="primary-gradient text-white px-4 py-2 rounded-full text-sm font-medium hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-300 inline-flex items-center justify-center">
+                            <i class="fas fa-flask mr-1.5"></i> Explore Research
+                        </a>
+                        <a href="#contact" class="bg-white text-teal-600 border border-teal-200 px-4 py-2 rounded-full text-sm font-medium hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-300 inline-flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-1.5"></i> Get In Touch
+                        </a>
+                    </div>
+                    <!-- Social Links Below Buttons -->
+                    <div id="homeSocialLinksContainer" class="social-links-container mt-2">
+                        <a href="#" class="social-link-icon" title="No links"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div id="homeScrollIndicator" class="absolute bottom-6 left-0 right-0 flex justify-center animate-bounce">
+                <a href="#experience" class="bg-white p-2.5 rounded-full shadow-md text-teal-600">
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
+        <!-- Experience Section (Vertical Timeline) -->
+        <section id="experience" class="enhanced-section bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="enhanced-section-header" data-aos="fade-up">
+                    <span class="enhanced-section-subtitle">Professional Journey</span>
+                    <h2 class="enhanced-section-title">Experience</h2>
+                </div>
+                <div id="loadingExperience" class="hidden text-center text-gray-600">Loading...</div>
+                <div id="errorExperience" class="hidden text-center text-red-600">Error loading experience data.</div>
+                <div id="experienceList" class="relative space-y-6">
+                    <!-- Timeline items will be populated here -->
+                    <p class="text-center text-gray-500">Loading experience details...</p>
+                </div>
+            </div>
+        </section>
+        <!-- Education Section (Vertical Timeline) -->
+        <section id="education" class="enhanced-section bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="enhanced-section-header" data-aos="fade-up">
+                    <span class="enhanced-section-subtitle">Academic Background</span>
+                    <h2 class="enhanced-section-title">Education</h2>
+                </div>
+                <div id="loadingEducation" class="hidden text-center text-gray-600">Loading...</div>
+                <div id="errorEducation" class="hidden text-center text-red-600">Error loading education data.</div>
+                <div id="educationList" class="relative space-y-6">
+                     <!-- Timeline items will be populated here -->
+                    <p class="text-center text-gray-500">Loading education details...</p>
+                </div>
+            </div>
+        </section>
+        <!-- Research Section (Publications with Tabs) -->
+        <section id="research" class="enhanced-section bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="enhanced-section-header" data-aos="fade-up">
+                    <span class="enhanced-section-subtitle">Research Focus</span>
+                    <h2 class="enhanced-section-title">Publications</h2>
+                </div>
+                <div class="mb-6 border-b border-gray-200 flex flex-wrap">
+                    <button class="tab-button active" onclick="filterPublications('all')">All</button>
+                    <button class="tab-button" onclick="filterPublications('journal')">Journals</button>
+                    <button class="tab-button" onclick="filterPublications('bookChapter')">Book Chapters</button>
+                    <button class="tab-button" onclick="filterPublications('patent')">Patents</button>
+                    <button class="tab-button" onclick="filterPublications('conference')">Conferences</button>
+                </div>
+                <div id="loadingPublications" class="hidden text-center text-gray-600">Loading...</div>
+                <div id="errorPublications" class="hidden text-center text-red-600">Error loading publications.</div>
+                <div id="publicationList" class="publication-grid"></div>
+            </div>
+        </section>
+        <!-- Gallery Section (Modal View) -->
+        <section id="gallery" class="enhanced-section bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="enhanced-section-header" data-aos="fade-up">
+                    <span class="enhanced-section-subtitle">Visual Journey</span>
+                    <h2 class="enhanced-section-title">Gallery</h2>
+                </div>
+                <div id="loadingGallery" class="hidden text-center text-gray-600">Loading...</div>
+                <div id="errorGallery" class="hidden text-center text-red-600">Error loading gallery data.</div>
+                <div id="galleryList" class="gallery-grid"></div>
+            </div>
+        </section>
+        <!-- Posts/Updates Section (Modal View) -->
+        <section id="posts" class="enhanced-section bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="enhanced-section-header" data-aos="fade-up">
+                    <span class="enhanced-section-subtitle">Recent Updates</span>
+                    <h2 class="enhanced-section-title">Posts & Updates</h2>
+                </div>
+                <div id="loadingPosts" class="hidden text-center text-gray-600">Loading...</div>
+                <div id="errorPosts" class="hidden text-center text-red-600">Error loading posts data.</div>
+                <div id="postList" class="post-grid"></div>
+            </div>
+        </section>
+        <!-- Resources Section -->
+        <section id="resources" class="enhanced-section bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="enhanced-section-header" data-aos="fade-up">
+                    <span class="enhanced-section-subtitle">Resources</span>
+                    <h2 class="enhanced-section-title">Documents, Images & More</h2>
+                </div>
+                <div id="loadingResources" class="hidden text-center text-gray-600">Loading...</div>
+                <div id="errorResources" class="hidden text-center text-red-600">Error loading resources.</div>
+                <div id="resourceList" class="resource-grid"></div>
+            </div>
+        </section>
+        <!-- Collaborators & Mentors Section -->
+        <section id="collaborators" class="enhanced-section bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="enhanced-section-header" data-aos="fade-up">
+                    <span class="enhanced-section-subtitle">Network</span>
+                    <h2 class="enhanced-section-title">Collaborators & Mentors</h2>
+                </div>
+                <div id="loadingCollaborators" class="hidden text-center text-gray-600">Loading...</div>
+                <div id="errorCollaborators" class="hidden text-center text-red-600">Error loading collaborators/mentors.</div>
+                <div id="collaboratorList" class="collaborator-grid"></div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+        <section id="contact" class="enhanced-section bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="enhanced-section-header" data-aos="fade-up">
+                    <span class="enhanced-section-subtitle">Get In Touch</span>
+                    <h2 class="enhanced-section-title">Contact</h2>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up">
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                            <input type="text" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                            <input type="text" name="subject" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                            <textarea name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full primary-gradient text-white py-2.5 rounded-md font-medium hover:shadow transition-all duration-300 text-sm">Send Message</button>
+                        <p id="contactSuccess" class="text-green-600 hidden text-center text-sm mt-2">Message sent successfully!</p>
+                        <p id="contactError" class="text-red-600 hidden text-center text-sm mt-2">Error sending message.</p>
+                    </form>
+                    <!-- Social Links Below Contact Form -->
+                    <div id="contactSocialLinksContainer" class="contact-social-links mt-4">
+                        <a href="#" class="contact-social-link" title="No links"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Floating Action Button -->
+        <div class="floating-action">
+            <a href="#home" class="primary-gradient text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                <i class="fas fa-arrow-up"></i>
+            </a>
+        </div>
+    </div> <!-- End Main Content -->
+    <!-- Modals -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Gallery Image</h2>
+                <span class="close" onclick="closeModal('galleryModal')">&times;</span>
+            </div>
+            <div class="modal-body flex justify-center items-center">
+                <img id="galleryModalImage" src="" alt="Gallery Image" class="modal-image">
+            </div>
+            <div class="p-4 bg-gray-50 text-center">
+                <p id="galleryModalDescription" class="text-gray-700"></p>
+            </div>
+        </div>
+    </div>
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="postModalTitle" class="modal-title">Post Title</h2>
+                <span class="close" onclick="closeModal('postModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="postModalDate" class="text-sm text-gray-500 mb-4"></p>
+                <img id="postModalImage" src="" alt="Post Image" class="w-full h-auto rounded-lg mb-4">
+                <div id="postModalContent" class="text-gray-700"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        AOS.init({ once: true, duration: 800 });
+
+        // --- Remove Dark Mode JavaScript ---
+        // The dark mode toggle button is hidden via CSS, and the body no longer has the 'dark-mode' class.
+        // The dark mode related JavaScript logic has been removed.
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = mobileMenuButton.querySelector('i');
+                    if (icon) {
+                        if (mobileMenu.classList.contains('hidden')) {
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        } else {
+                            icon.classList.remove('fa-bars');
+                            icon.classList.add('fa-times');
+                        }
+                    }
+                });
+            }
+        });
+        function setActiveNav() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link-top');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+                // Ensure Home link is active when at the very top
+                if ((current === 'home' || current === '' || window.scrollY < 100) && link.getAttribute('href') === '#home') {
+                    link.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', setActiveNav);
+        window.addEventListener('load', setActiveNav);
+        window.addEventListener('resize', setActiveNav);
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+        function openModal(modalId, data) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            if (modalId === 'galleryModal') {
+                document.getElementById('galleryModalImage').src = data.image;
+                document.getElementById('galleryModalDescription').textContent = data.description || '';
+            } else if (modalId === 'postModal') {
+                document.getElementById('postModalTitle').textContent = data.title;
+                document.getElementById('postModalDate').textContent = data.date ? new Date(data.date).toLocaleDateString() : 'N/A';
+                document.getElementById('postModalImage').src = data.image;
+                document.getElementById('postModalContent').innerHTML = data.content || '';
+            }
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        let currentFilter = 'all';
+        function filterPublications(type) {
+            currentFilter = type;
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            loadData();
+        }
+        // --- Function to render social links ---
+        function renderSocialLinks(linksArray, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const iconMap = {
+                'twitter': 'fab fa-twitter',
+                'linkedin': 'fab fa-linkedin-in',
+                'github': 'fab fa-github',
+                'google scholar': 'fas fa-graduation-cap',
+                'researchgate': 'fab fa-researchgate',
+                'facebook': 'fab fa-facebook-f',
+                'instagram': 'fab fa-instagram',
+                'youtube': 'fab fa-youtube',
+                'default': 'fas fa-link'
+            };
+            if (linksArray && linksArray.length > 0) {
+                container.innerHTML = linksArray.map(link => {
+                    const normalizedName = (link.name || '').toLowerCase().trim();
+                    let iconClass = iconMap[normalizedName] || iconMap['default'];
+                    if (normalizedName === 'google scholar') {
+                        // Using a generic favicon service or you can host the favicon yourself
+                        return `<a href="${link.url}" target="_blank" title="${link.name || 'Google Scholar'}" class="${containerId.includes('home') ? 'social-link-icon' : 'contact-social-link'}">
+                                    <img src="https://www.google.com/s2/favicons?domain=scholar.google.com&sz=64" alt="Google Scholar" class="w-4 h-4">
+                                </a>`;
+                    }
+                    return `<a href="${link.url}" target="_blank" title="${link.name || 'Link'}" class="${containerId.includes('home') ? 'social-link-icon' : 'contact-social-link'}">
+                                <i class="${iconClass}"></i>
+                            </a>`;
+                }).join('');
+            } else {
+                const defaultClass = containerId.includes('home') ? 'social-link-icon' : 'contact-social-link';
+                container.innerHTML = `<a href="#" class="${defaultClass}" title="No links"><i class="fas fa-link"></i></a>`;
+            }
+        }
+        // --- End Function ---
+        async function loadData() {
+            try {
+                const response = await axios.get('http://localhost:3000/api/data');
+                const data = response.data.data;
+                // --- Hero Section Updates ---
+                const profileImageUrl = data.profileImage || 'assets/uploads/profile.jpg';
+                const homeBackgroundUrl = data.homeBackgroundImage || '';
+                const profileName = data.name || 'Dr. P. Mathan Kumar';
+                const profileDescription = data.description || 'Academic Researcher';
+                document.getElementById('homeProfileImage').src = profileImageUrl;
+                document.getElementById('homeProfileName').textContent = profileName;
+                document.getElementById('homeProfileDescription').textContent = profileDescription;
+                const bgContainer = document.getElementById('homeBackgroundContainer');
+                const bgImage = document.getElementById('homeBackgroundImage');
+                if (homeBackgroundUrl) {
+                    bgImage.src = homeBackgroundUrl;
+                    bgContainer.classList.remove('hidden');
+                } else {
+                    bgContainer.classList.add('hidden');
+                }
+                // --- Metrics Updates ---
+                const totalPublications = data.publications?.length || 0;
+                const bookChapters = data.publications?.filter(p => p.type === 'bookChapter').length || 0;
+                const hIndex = data.metrics?.hIndex || 0;
+                const totalCitations = data.metrics?.totalCitations || 0;
+                const i10Index = data.metrics?.i10Index || 0;
+                document.getElementById('homeTotalPublications').textContent = totalPublications;
+                document.getElementById('homeBookChapters').textContent = bookChapters;
+                document.getElementById('homeHIndex').textContent = hIndex;
+                document.getElementById('homeTotalCitations').textContent = totalCitations;
+                document.getElementById('homeI10Index').textContent = i10Index;
+                // --- Research Areas Updates ---
+                const homeResearchAreasContainer = document.getElementById('homeResearchAreasList');
+                if (homeResearchAreasContainer) {
+                    if (data.researchAreas && data.researchAreas.length > 0) {
+                        homeResearchAreasContainer.innerHTML = data.researchAreas.map(area =>
+                            `<span class="bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-1 rounded-full border border-teal-200">
+                                ${area.name}
+                            </span>`
+                        ).join(' ');
+                    } else {
+                        homeResearchAreasContainer.innerHTML = '<span class="text-gray-500 text-xs italic">Research areas not specified.</span>';
+                    }
+                }
+                // --- Render Social Links in Hero Section ---
+                renderSocialLinks(data.socialLinks, 'homeSocialLinksContainer');
+                // --- Experience Updates (Vertical Timeline) ---
+                const experienceList = document.getElementById('experienceList');
+                experienceList.innerHTML = '';
+                document.getElementById('loadingExperience').classList.remove('hidden');
+                document.getElementById('errorExperience').classList.add('hidden');
+                if (data.experience && data.experience.length) {
+                    experienceList.innerHTML = `
+                        <div class="timeline">
+                            ${data.experience.map(item => `
+                                <div class="timeline-item bg-white p-5 rounded-xl shadow-md border border-gray-100" data-aos="fade-up">
+                                    <div class="flex items-start">
+                                        <div class="bg-purple-100 p-2.5 rounded-lg mr-3">
+                                            <i class="fas fa-briefcase text-purple-600 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-800">${item.role}</h3>
+                                            <p class="text-gray-600">${item.institution}</p>
+                                            <p class="text-gray-500 text-sm mt-1"><i class="far fa-calendar-alt mr-1"></i> ${item.period}</p>
+                                             ${item.description ? `<div class="mt-2 text-gray-600 text-sm" style="white-space: pre-line;">${item.description}</div>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    experienceList.innerHTML = '<p class="text-center text-gray-600">No experience data available.</p>';
+                }
+                document.getElementById('loadingExperience').classList.add('hidden');
+                // --- Education Updates (Vertical Timeline) ---
+                const educationList = document.getElementById('educationList');
+                educationList.innerHTML = '';
+                document.getElementById('loadingEducation').classList.remove('hidden');
+                document.getElementById('errorEducation').classList.add('hidden');
+                if (data.education && data.education.length) {
+                    educationList.innerHTML = `
+                        <div class="timeline">
+                            ${data.education.map(item => `
+                                <div class="timeline-item bg-white p-5 rounded-xl shadow-md border border-gray-100" data-aos="fade-up">
+                                    <div class="flex items-start">
+                                        <div class="bg-teal-100 p-2.5 rounded-lg mr-3">
+                                            <i class="fas fa-graduation-cap text-teal-600 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-800">${item.degree}</h3>
+                                            <p class="text-gray-600">${item.institution}</p>
+                                            <p class="text-gray-500 text-sm mt-1"><i class="far fa-calendar-alt mr-1"></i> ${item.period}</p>
+                                             ${item.description ? `<div class="mt-2 text-gray-600 text-sm" style="white-space: pre-line;">${item.description}</div>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    educationList.innerHTML = '<p class="text-center text-gray-600">No education data available.</p>';
+                }
+                document.getElementById('loadingEducation').classList.add('hidden');
+                // --- Publications Updates ---
+                const publicationList = document.getElementById('publicationList');
+                publicationList.innerHTML = '';
+                document.getElementById('loadingPublications').classList.remove('hidden');
+                document.getElementById('errorPublications').classList.add('hidden');
+                let filteredPublications = data.publications || [];
+                if (currentFilter !== 'all') {
+                    filteredPublications = filteredPublications.filter(p => p.type === currentFilter);
+                }
+                if (filteredPublications.length) {
+                    publicationList.innerHTML = filteredPublications.map(item => `
+                        <div class="publication-card" data-aos="fade-up">
+                            <div class="publication-header">
+                                <div>
+                                    <span class="publication-journal">${item.journal || 'Journal'}</span>
+                                    <h4 class="publication-title">${item.title}</h4>
+                                </div>
+                                <div class="publication-year">${item.year || 'N/A'}</div>
+                            </div>
+                            ${item.authors ? `<p class="publication-authors text-xs text-gray-600 mt-2"><span class="font-medium">Authors:</span> ${item.authors}</p>` : ''}
+                            ${item.doi ? `<p class="publication-doi text-xs text-gray-500 mt-1"><span class="font-medium">DOI:</span> <a href="https://doi.org/${item.doi}" target="_blank" class="text-blue-500 hover:underline">${item.doi}</a></p>` : ''}
+                            <p class="publication-description mt-2">${item.description || ''}</p>
+                        </div>
+                    `).join('');
+                } else {
+                    publicationList.innerHTML = '<p class="text-center text-gray-600 col-span-full">No publications found for this filter.</p>';
+                }
+                document.getElementById('loadingPublications').classList.add('hidden');
+                // --- Gallery Updates ---
+                const galleryList = document.getElementById('galleryList');
+                galleryList.innerHTML = '';
+                document.getElementById('loadingGallery').classList.remove('hidden');
+                document.getElementById('errorGallery').classList.add('hidden');
+                if (data.gallery && data.gallery.length) {
+                    galleryList.innerHTML = data.gallery.map((item, index) => `
+                        <div class="gallery-item" data-aos="fade-up" onclick='openModal("galleryModal", ${JSON.stringify(item).replace(/'/g, "\\'")})'>
+                            <img src="${item.image}" alt="${item.description || 'Gallery image'}" class="gallery-image">
+                            <div class="gallery-overlay">
+                                <p class="gallery-description">${item.description || ''}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    galleryList.innerHTML = '<p class="text-center text-gray-600 col-span-3">No gallery images available.</p>';
+                }
+                document.getElementById('loadingGallery').classList.add('hidden');
+                // --- Posts Updates ---
+                const postList = document.getElementById('postList');
+                postList.innerHTML = '';
+                document.getElementById('loadingPosts').classList.remove('hidden');
+                document.getElementById('errorPosts').classList.add('hidden');
+                if (data.posts && data.posts.length) {
+                    postList.innerHTML = data.posts.map((item, index) => `
+                        <div class="post-card" data-aos="fade-up" onclick='openModal("postModal", ${JSON.stringify(item).replace(/'/g, "\\'")})'>
+                            <div class="post-image-container">
+                                <img src="${item.image}" alt="${item.title}" class="post-image">
+                            </div>
+                            <div class="post-content">
+                                <span class="post-date"><i class="far fa-calendar-alt mr-1"></i> ${item.date ? new Date(item.date).toLocaleDateString() : 'N/A'}</span>
+                                <h3 class="post-title">${item.title}</h3>
+                                <p class="post-excerpt">${truncateText(item.content, 150)}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    postList.innerHTML = '<p class="text-center text-gray-600">No posts available.</p>';
+                }
+                document.getElementById('loadingPosts').classList.add('hidden');
+                // --- Resources Updates ---
+                const resourceList = document.getElementById('resourceList');
+                resourceList.innerHTML = '';
+                document.getElementById('loadingResources').classList.remove('hidden');
+                document.getElementById('errorResources').classList.add('hidden');
+                if (data.resources && data.resources.length) {
+                    resourceList.innerHTML = data.resources.map(item => {
+                        let iconClass = 'fas fa-file';
+                        let linkAction = `href="${item.file}" target="_blank"`;
+                        let linkText = 'View';
+                        if (item.mimeType) {
+                            if (item.mimeType.startsWith('image/')) {
+                                iconClass = 'fas fa-file-image text-blue-500';
+                            } else if (item.mimeType === 'application/pdf') {
+                                iconClass = 'fas fa-file-pdf text-red-500';
+                            } else if (item.mimeType === 'application/msword' || item.mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                                iconClass = 'fas fa-file-word text-blue-600';
+                            } else if (item.mimeType === 'application/vnd.ms-powerpoint' || item.mimeType === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
+                                iconClass = 'fas fa-file-powerpoint text-orange-500';
+                            } else if (item.mimeType === 'application/zip' || item.mimeType === 'application/x-zip-compressed') {
+                                iconClass = 'fas fa-file-archive text-yellow-500';
+                            } else if (item.mimeType.startsWith('video/')) {
+                                iconClass = 'fas fa-file-video text-purple-500';
+                                linkText = 'Watch/Download';
+                            }
+                        }
+                        return `
+                         <a href="${item.file}" target="_blank" download class="resource-card" data-aos="fade-up">
+                            <div class="flex items-center">
+                                <i class="${iconClass} text-2xl mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-gray-800">${item.name}</h4>
+                                     ${item.description ? `<p class="text-xs text-gray-600 mt-1">${truncateText(item.description, 50)}</p>` : ''}
+                                </div>
+                            </div>
+                            <div class="ml-auto text-teal-600 text-sm font-medium">${linkText}</div>
+                        </a>
+                    `}).join('');
+                } else {
+                    resourceList.innerHTML = '<p class="text-center text-gray-600 col-span-3">No resources available.</p>';
+                }
+                document.getElementById('loadingResources').classList.add('hidden');
+                // --- Collaborators Updates ---
+                const collaboratorList = document.getElementById('collaboratorList');
+                collaboratorList.innerHTML = '';
+                document.getElementById('loadingCollaborators').classList.remove('hidden');
+                document.getElementById('errorCollaborators').classList.add('hidden');
+                if (data.collaboratorsMentors && data.collaboratorsMentors.length) {
+                    collaboratorList.innerHTML = data.collaboratorsMentors.map(item => `
+                        <div class="collaborator-card" data-aos="fade-up">
+                            ${item.image ? `<div class="collaborator-image-container"><img src="${item.image}" alt="${item.name}" class="collaborator-image"></div>` : `<div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center mb-3"><i class="fas fa-user text-gray-500 text-2xl"></i></div>`}
+                            <h3 class="collaborator-name">${item.name}</h3>
+                            <p class="collaborator-designation">${item.designation}</p>
+                            <span class="collaborator-role role-${item.role}">${item.role.charAt(0).toUpperCase() + item.role.slice(1)}</span>
+                            <p class="collaborator-description mt-3">${item.description || ''}</p>
+                        </div>
+                    `).join('');
+                } else {
+                    collaboratorList.innerHTML = '<p class="text-center text-gray-600 col-span-3">No collaborators or mentors listed.</p>';
+                }
+                document.getElementById('loadingCollaborators').classList.add('hidden');
+                // --- Render Social Links in Contact Section ---
+                renderSocialLinks(data.socialLinks, 'contactSocialLinksContainer');
+                AOS.refresh();
+            } catch (error) {
+                console.error('Error loading ', error);
+                ['Education', 'Experience', 'Publications', 'Gallery', 'Posts', 'Resources', 'Collaborators'].forEach(section => {
+                    const sectionName = section.toLowerCase();
+                    const loadingElement = document.getElementById(`loading${section}`);
+                    const errorElement = document.getElementById(`error${section}`);
+                    if (loadingElement) loadingElement.classList.add('hidden');
+                    if (errorElement) errorElement.classList.remove('hidden');
+                });
+            }
+        }
+        // --- Contact Form Handler ---
+        document.getElementById('contactForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const success = document.getElementById('contactSuccess');
+            const error = document.getElementById('contactError');
+            success.classList.add('hidden');
+            error.classList.add('hidden');
+            try {
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+                await axios.post('http://localhost:3000/api/contact', data);
+                success.classList.remove('hidden');
+                this.reset();
+                setTimeout(() => success.classList.add('hidden'), 3000);
+            } catch (err) {
+                console.error('Error sending message:', err);
+                error.classList.remove('hidden');
+                setTimeout(() => error.classList.add('hidden'), 3000);
+            }
+        });
+        // --- Initial Load ---
+        window.addEventListener('load', () => {
+            loadData();
+        });
+    </script>
+</body>
+</html>
