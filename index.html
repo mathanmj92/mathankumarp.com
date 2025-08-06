@@ -1134,7 +1134,7 @@
         // --- End Function ---
         async function loadData() {
             try {
-                const response = await axios.get('/api/data'); // Or just 'data.json'
+                const response = await axios.get('data.json'); // Or just 'data.json'
                 const data = response.data.data;
                 // --- Hero Section Updates ---
                 const profileImageUrl = data.profileImage || 'assets/uploads/profile.jpg';
@@ -1407,3 +1407,4 @@
 </body>
 
 </html>
+
