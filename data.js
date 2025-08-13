@@ -8,14 +8,14 @@ const portfolioData = {
     "cvLink": "#"
   },
   "stats": {
-    "publications": "42",
-    "citations": "1,280",
-    "hIndex": "24",
-    "iIndex": "38"
+    "publications": "16",
+    "citations": "434",
+    "hIndex": "11",
+    "iIndex": "11"
   },
   "contact": {
-    "email": "dr.jane.smith@research.edu",
-    "location": "Institute of Advanced Sciences\u003cbr\u003eCambridge, MA 02139"
+    "email": "mathannits92@gmail.com",
+    "location": "University of Madras, Chennai, Tamilnadu, India"
   },
   "footer": {
     "title": "Senior Research Scientist | Quantum Computing Researcher",
@@ -23,29 +23,34 @@ const portfolioData = {
   },
   "timeline": [
     {
-      "date": "2022 - Present",
-      "title": "Senior Research Scientist",
-      "description": "Leading research in quantum computing applications at the Institute of Advanced Sciences. Supervising PhD candidates and managing research projects."
-    },
-    {
-      "date": "2019 - 2022",
+      "id": 1,
+      "date": "2025-Present",
       "title": "Postdoctoral Researcher",
-      "description": "Conducted groundbreaking research in quantum algorithms at MIT Quantum Computing Lab under Dr. Michael Chen."
+      "description": "working on 2D materials via MOCVD technique for electronic and electrochemical applications - SRM Institute of Science and Technology, Kattankulathur, Tamilnadu, India"
     },
     {
-      "date": "2015 - 2019",
-      "title": "Ph.D. in Quantum Physics",
-      "description": "Stanford University. Thesis: 'Quantum Entanglement in Superconducting Circuits'. Advisor: Dr. Michael Chen."
+      "id": 2,
+      "date": "2019-2024",
+      "title": "Ph.D. In Physics-Energy",
+      "description": "worked on Counter Electrode materials for DSSC applications - University of Madras, Chennai,India"
     },
     {
-      "date": "2013 - 2015",
+      "id": 3,
+      "date": "2016-2018",
+      "title": "Project Fellow",
+      "description": "worked on Ion Beam Implanted Photoanode materials as Photoanode for DSSC devices -IUAC Sponsored Project - NIT Silchar, Assam, India"
+    },
+    {
+      "id": 4,
+      "date": "2013-2015",
       "title": "M.Sc. in Physics",
-      "description": "University of Cambridge. Specialized in Quantum Mechanics and Statistical Physics. Graduated with distinction."
+      "description": "Ayya Nadar Janaki Ammal College, Sivakasi, Tamilnadu,- affiliated to Madurai Kamaraj University, Madurai, Tamilnadu, India"
     },
     {
-      "date": "2009 - 2013",
+      "id": 5,
+      "date": "2010-2013",
       "title": "B.Sc. in Physics",
-      "description": "California Institute of Technology. Graduated with honors. Minor in Computer Science."
+      "description": "Kalsalingam College of Arts & Science, Krishnankoil, Tamilnadu,- affiliated to Madurai Kamaraj University, Madurai, Tamilnadu, India"
     }
   ],
   "publications": {
@@ -54,7 +59,18 @@ const portfolioData = {
     "chapter": [],
     "patent": []
   },
-  "researchCircle": [],
+  "researchCircle": [
+    {
+      "id": 1,
+      "name": "Dr. B. Muthuraaman",
+      "role": "Ph.D Supervisor",
+      "bio": "",
+      "image": "",
+      "tags": [
+        "Supervisor"
+      ]
+    }
+  ],
   "gallery": [],
   "collections": {
     "videos": [],
