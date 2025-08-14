@@ -440,11 +440,14 @@
             font-size: 1.15rem;
             margin-bottom: 10px;
             line-height: 1.4;
+            color: rgb(255, 255, 255);
         }
 
         .pub-authors {
             font-size: 0.9rem;
+            font-style:italic;
             opacity: 0.9;
+            color: rgb(148, 205, 255);
         }
 
         .pub-details {
@@ -1536,7 +1539,8 @@
                             <div class="pub-details">
                                 <div class="pub-journal">${pub.journal}</div>
                                 <div class="pub-year">Published: ${pub.year}</div>
-                                <div class="pub-doi">DOI: ${pub.doi}</div>
+                                <div class="pub-doi">
+                                    DOI: <a href="https://doi.org/${pub.doi}" target="_blank" rel="noopener noreferrer">${pub.doi}</a>
                             </div>
                         `;
                         gridDiv.appendChild(pubCard);
